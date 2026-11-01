@@ -1,0 +1,162 @@
+[
+  {
+    "query": "What is the current market capitalization of the parent company?",
+    "split": "train"
+  },
+  {
+    "query": "How many employees does the company currently have on payroll?",
+    "split": "train"
+  },
+  {
+    "query": "What was the company's total revenue in the most recent fiscal year?",
+    "split": "train"
+  },
+  {
+    "query": "What is the CEO's annual base salary and bonus structure?",
+    "split": "test"
+  },
+  {
+    "query": "What environmental compliance certifications does the company hold?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's current credit rating from Moody's or S&P?",
+    "split": "test"
+  },
+  {
+    "query": "How many pending patent applications does the company have?",
+    "split": "test"
+  },
+  {
+    "query": "What is the company's policy on remote work for employees?",
+    "split": "train"
+  },
+  {
+    "query": "What are the board of directors' meeting minutes from the last quarter?",
+    "split": "train"
+  },
+  {
+    "query": "What is the depreciation schedule for the company's fixed assets?",
+    "split": "train"
+  },
+  {
+    "query": "How many shares of common stock are currently outstanding?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's diversity and inclusion policy?",
+    "split": "train"
+  },
+  {
+    "query": "What cybersecurity incidents has the company reported in the last year?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's carbon emissions target for 2030?",
+    "split": "test"
+  },
+  {
+    "query": "How much did the company spend on research and development last year?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's customer satisfaction score or NPS?",
+    "split": "test"
+  },
+  {
+    "query": "What internal audit findings were reported in the most recent review?",
+    "split": "test"
+  },
+  {
+    "query": "What is the company's policy on political donations and lobbying?",
+    "split": "train"
+  },
+  {
+    "query": "How many data centers does the company operate worldwide?",
+    "split": "train"
+  },
+  {
+    "query": "What is the average tenure of the company's executive leadership team?",
+    "split": "test"
+  },
+  {
+    "query": "What percentage of revenue comes from international markets?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's workers' compensation claims history?",
+    "split": "test"
+  },
+  {
+    "query": "How many product recalls has the company issued in the past five years?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's current ratio of debt to equity?",
+    "split": "train"
+  },
+  {
+    "query": "What whistleblower complaints have been filed against the company?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's GDPR compliance status in European markets?",
+    "split": "train"
+  },
+  {
+    "query": "How many subsidiaries does the parent company currently operate?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's inventory turnover ratio?",
+    "split": "test"
+  },
+  {
+    "query": "What are the terms of the company's revolving credit facility?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's policy on stock buybacks?",
+    "split": "test"
+  },
+  {
+    "query": "How many active lawsuits is the company currently defending?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's estimated total addressable market?",
+    "split": "train"
+  },
+  {
+    "query": "What supply chain disruptions has the company experienced recently?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's policy on executive stock option vesting?",
+    "split": "train"
+  },
+  {
+    "query": "How many countries does the company have sales operations in?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's annual marketing and advertising budget?",
+    "split": "test"
+  },
+  {
+    "query": "What safety violations has OSHA cited the company for?",
+    "split": "train"
+  },
+  {
+    "query": "What is the company's free cash flow for the trailing twelve months?",
+    "split": "train"
+  },
+  {
+    "query": "What succession plan exists for the current CEO?",
+    "split": "test"
+  },
+  {
+    "query": "What is the company's stance on cryptocurrency as a payment method?",
+    "split": "train"
+  }
+]
