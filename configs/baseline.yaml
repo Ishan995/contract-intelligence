@@ -1,0 +1,17 @@
+chunk_size: 512
+chunk_overlap: 128
+chunking_mode: "fixed"          # "fixed" | "clause"
+bm25_k1: 1.5
+bm25_b: 0.75
+retrieval_mode: "bm25"          # "bm25" | "dense" | "hybrid"
+hybrid_alpha: 0.5               # weight for BM25 in hybrid (1-alpha for dense)
+bm25_abstain_threshold: 5.0
+dense_abstain_threshold: 0.25
+hybrid_abstain_threshold: 3.0
+data_dir: "data/corpus"
+benchmark_path: "data/benchmarks/cuad.json"
+unanswerable_path: "queries/unanswerable.json"
+subset_size: 194
+dense_model: "sentence-transformers/all-MiniLM-L6-v2"
+cache_dir: "cache"
+
