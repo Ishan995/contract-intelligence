@@ -1,8 +1,17 @@
-chunk_size: 512
-chunk_overlap: 128
-bm25_abstain_threshold: 5.0
-data_dir: "data/corpus"
-benchmark_path: "data/benchmarks/cuad.json"
-unanswerable_path: "queries/unanswerable.json"
+chunk_size: 1024
+chunk_overlap: 256
+chunking_mode: fixed
+bm25_k1: 0.5
+bm25_b: 0.3
+retrieval_mode: bm25
+hybrid_alpha: 0.5
+bm25_abstain_threshold: 32.19
+dense_abstain_threshold: 0.25
+hybrid_abstain_threshold: 3.0
+data_dir: data/corpus
+benchmark_path: data/benchmarks/cuad.json
+unanswerable_path: queries/unanswerable.json
 subset_size: 194
-
+dense_model: sentence-transformers/all-MiniLM-L6-v2
+cache_dir: cache
+k: 4

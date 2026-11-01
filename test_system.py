@@ -122,3 +122,50 @@ class TestCharOverlap:
         # pred chars: 20, gold chars: 20
         assert p == 0.5 and r == 0.5
 
+
+# ── Abstention logic tests ──
+
+
+class TestAbstentionLogic:
+    def test_bm25_abstains_below_threshold(self):
+        """When top score is below threshold, search returns empty list (abstains)."""
+        from baseline import BM25Search
+
+        cfg = {
+            "chunk_size": 200,
+            "chunk_overlap": 50,
+            "bm25_k1": 1.5,
+            "bm25_b": 0.75,
+            "bm25_abstain_threshold": 1000.0,
+            "subset_size": 194,
+            "benchmark_path": "data/benchmarks/cuad.json",
+            "data_dir": "data/corpus",
+            "unanswerable_path": "queries/unanswerable.json",
+        }
+        searcher = BM25Search(cfg)
+        res = searcher.search("query unlikely to score above 1000")
+        assert res == []
+
+    def test_bm25_returns_results_above_threshold(self):
+        """When top score exceeds threshold, search returns ranked passages with offsets."""
+        from baseline import BM25Search
+
+        cfg = {
+            "chunk_size": 512,
+            "chunk_overlap": 128,
+            "bm25_k1": 1.5,
+            "bm25_b": 0.75,
+            "bm25_abstain_threshold": 0.0,
+            "subset_size": 194,
+            "benchmark_path": "data/benchmarks/cuad.json",
+            "data_dir": "data/corpus",
+            "unanswerable_path": "queries/unanswerable.json",
+        }
+        searcher = BM25Search(cfg)
+        res = searcher.search("agreement", k=4)
+        assert len(res) == 4
+        for fp, start, end, score in res:
+            assert score >= 0.0
+            assert start < end
+
+

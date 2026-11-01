@@ -14,3 +14,4 @@ unanswerable_path: queries/unanswerable.json
 subset_size: 194
 dense_model: sentence-transformers/all-MiniLM-L6-v2
 cache_dir: cache
+k: 4

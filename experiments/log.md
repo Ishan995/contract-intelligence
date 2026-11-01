@@ -2,6 +2,18 @@
 
 Started: 2026-11-01T17:51:15.965958
 
+## Optimization Objective & Guardrail Metrics
+
+- **Primary Objective:** Maximize **Recall@8** on answerable contract queries (TRAIN split only).
+  - *Justification:* Legal professionals reviewing commercial agreements need relevant clauses within a manageable review horizon (k=8). In legal intelligence, false negatives (omitting governing terms) pose substantial risk.
+- **Guardrail Metric 1:** **Precision@1 drop < 2.0 pp** (delta P@1 >= -0.02).
+  - *Justification:* Expanding chunk boundaries or dampening length penalties must not degrade top-ranked span precision with boilerplate noise.
+- **Guardrail Metric 2:** **Abstention Accuracy on Unanswerable Queries drop < 2.0 pp** (delta AbsAcc >= -0.02).
+  - *Justification:* System must reliably abstain on unanswerable out-of-scope queries rather than surfacing spurious contract passages.
+- **Guardrail Metric 3:** **False Rejection on Real Queries <= 15.0%** (real_abstain_rate <= 0.15).
+  - *Justification:* Prevents over-conservative thresholds from excessively rejecting legitimate answerable legal questions.
+
+
 ## Iteration 0
 
 - **Change:** baseline

@@ -3,7 +3,10 @@
 import argparse
 import datetime
 import json
+import os
+import re
 from collections import defaultdict
+from pathlib import Path
 
 from tabulate import tabulate
 
@@ -51,8 +54,26 @@ def char_overlap(pred_spans, gold_spans):
     return precision, recall
 
 
-def evaluate(split_name: str):
-    cfg = load_config()
+def get_next_run_id(log_path="test_runs.log"):
+    if not os.path.exists(log_path):
+        return 1
+    with open(log_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    matches = [int(m) for m in re.findall(r"Run(?:\s*counter)?:\s*(\d+)", content, re.IGNORECASE)]
+    if matches:
+        return max(matches) + 1
+    test_blocks = len(re.findall(r"Split:\s*test", content, re.IGNORECASE))
+    return test_blocks + 1
+
+
+def evaluate(split_name: str, config_path: str = None, log_to_file: bool = True):
+    if config_path:
+        cfg = load_config(config_path)
+    elif Path("configs/final.yaml").exists():
+        cfg = load_config("configs/final.yaml")
+    else:
+        cfg = load_config("config.yaml")
+
     searcher = BM25Search(cfg)
 
     # Load unanswerable
@@ -111,21 +132,27 @@ def evaluate(split_name: str):
     print(f"\n=== {split_name.upper()} split ({len(tests)} queries, {len(unans)} unanswerable) ===")
     print(table)
 
-    # Log to test_runs.log
-    with open("test_runs.log", "a", encoding="utf-8") as f:
-        f.write(f"\n{'='*60}\n")
-        f.write(f"Timestamp: {datetime.datetime.now().isoformat()}\n")
-        f.write(f"Split: {split_name}\n")
-        f.write(f"Queries: {len(tests)}, Unanswerable: {len(unans)}\n")
-        f.write(f"Config: chunk_size={cfg['chunk_size']}, overlap={cfg['chunk_overlap']}, threshold={cfg['bm25_abstain_threshold']}\n")
-        f.write(table + "\n")
+    if log_to_file and split_name == "test":
+        run_counter = get_next_run_id("test_runs.log")
+        with open("test_runs.log", "a", encoding="utf-8") as f:
+            f.write(f"\n{'='*60}\n")
+            f.write(f"Run: {run_counter}\n")
+            f.write(f"Timestamp: {datetime.datetime.now().isoformat()}\n")
+            f.write(f"Split: {split_name}\n")
+            f.write(f"Queries: {len(tests)}, Unanswerable: {len(unans)}\n")
+            f.write(f"Config: chunk_size={cfg['chunk_size']}, overlap={cfg['chunk_overlap']}, threshold={cfg['bm25_abstain_threshold']}\n")
+            f.write(table + "\n")
+
+    return rows, len(tests), len(unans)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--split", required=True, choices=["train", "test"])
+    parser.add_argument("--config", default=None, help="Path to YAML config")
+    parser.add_argument("--no-log", action="store_true", help="Do not write to test_runs.log")
     args = parser.parse_args()
-    evaluate(args.split)
+    evaluate(args.split, config_path=args.config, log_to_file=not args.no_log)
 
 
 if __name__ == "__main__":

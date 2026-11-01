@@ -18,20 +18,25 @@ class BM25Search:
         self.tests = subset_tests(load_benchmark(self.cfg), self.cfg["subset_size"])
         self.chunks, self.documents = build_index(self.tests, self.cfg)
         tokenized = [c[3].lower().split() for c in self.chunks]
-        self.bm25 = BM25Okapi(tokenized)
-        self.threshold = self.cfg["bm25_abstain_threshold"]
+        k1 = float(self.cfg.get("bm25_k1", 1.5))
+        b = float(self.cfg.get("bm25_b", 0.75))
+        self.bm25 = BM25Okapi(tokenized, k1=k1, b=b)
+        self.threshold = float(self.cfg["bm25_abstain_threshold"])
+        self.k = int(self.cfg.get("k", self.cfg.get("top_k", 16)))
 
     def score_query(self, query: str):
         """Return raw BM25 scores array for a query (cached-friendly entry point)."""
         tokens = query.lower().split()
         return self.bm25.get_scores(tokens)
 
-    def search(self, query: str, k: int = 16, scores=None):
+    def search(self, query: str, k: int = None, scores=None):
         """Return top-k results as list of (file_path, start, end, score).
 
         Pass pre-computed scores to avoid re-scoring.
         Returns empty list if top score < threshold (abstain).
         """
+        if k is None:
+            k = self.k
         if scores is None:
             scores = self.score_query(query)
         top_indices = np.argsort(scores)[::-1][:k]
